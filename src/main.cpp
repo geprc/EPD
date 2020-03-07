@@ -10,7 +10,6 @@
 #include <GxGDEP015OC1/GxGDEP015OC1.h>
 #include "qrcode.h"
 #include <ArduinoOTA.h>
-#include <ESPmDNS.h>
 
 bool is_use_ap = false;
 const char* ssid = "TP-LINK_4135";
