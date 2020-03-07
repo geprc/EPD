@@ -2,6 +2,7 @@
 #include <GxEPD.h>
 #include <SPIFFS.h>
 #include <Arduino.h>
+#include <ArduinoOTA.h>
 #include <WebSocketsServer.h>
 #include <ESPAsyncWebServer.h>
 #include <GxIO/GxIO_SPI/GxIO_SPI.h>
@@ -9,7 +10,6 @@
 #include <Fonts/FreeMonoBold12pt7b.h>
 #include <GxGDEP015OC1/GxGDEP015OC1.h>
 #include "qrcode.h"
-#include <ArduinoOTA.h>
 
 bool is_use_ap = false;
 const char* ssid = "TP-LINK_4135";
