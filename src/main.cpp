@@ -80,7 +80,7 @@ void setup() {
         request->send(response);
     });
     server.on("/favicon.ico", HTTP_GET, [](AsyncWebServerRequest *request) {
-        request->send(SPIFFS, "/avatar2.jpg", "image/jpeg");
+        request->send(SPIFFS, "/avatar.jpg", "image/jpeg");
     });
     server.serveStatic("/", SPIFFS, "/www/");
     server.begin();
