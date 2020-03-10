@@ -1,5 +1,5 @@
-#include "qrcode.h"
 #include <Arduino.h>
+#include "qrcode.h"
 #include "qrencode.h"
 
 int offsetsX = 10;
