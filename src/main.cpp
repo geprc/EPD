@@ -11,6 +11,7 @@
 #include "qrcode.h"
 
 bool is_use_ap = false;
+uint8_t refreshesCount = 0;
 const char* ssid = "TP-LINK_4135";
 const char* password = "ww112233..";
 
@@ -29,6 +30,7 @@ void setup() {
         while (1) yield();
     }
     display.init();
+    display.update();
     display.setCursor(0, 9);
     display.setTextColor(GxEPD_BLACK);
     display.setFont(&FreeMonoBold9pt7b);
@@ -105,9 +107,16 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t length)
             break;
         case WStype_BIN:{
             Serial.printf("[%u] get binary length: %u\n", num, length);
-            display.fillScreen(GxEPD_WHITE);
-            display.drawBitmap(payload, 0, 0, GxEPD_WIDTH, GxEPD_HEIGHT, GxEPD_BLACK);
-            display.updateWindow(0, 0, GxEPD_WIDTH, GxEPD_HEIGHT, false);
+            if (++refreshesCount < 8) {
+                display.fillScreen(GxEPD_WHITE);
+                display.drawBitmap(payload, 0, 0, GxEPD_WIDTH, GxEPD_HEIGHT, GxEPD_BLACK);
+                display.updateWindow(0, 0, GxEPD_WIDTH, GxEPD_HEIGHT, false);
+            } else {
+                refreshesCount = 0;
+                display.fillScreen(GxEPD_WHITE);
+                display.drawBitmap(payload, 0, 0, GxEPD_WIDTH, GxEPD_HEIGHT, GxEPD_BLACK);
+                display.update();
+            }
             break;
         }
         case WStype_PING:
