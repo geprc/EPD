@@ -1,19 +1,20 @@
-#include <FS.h>
-#include <GxEPD.h>
-#include <SPIFFS.h>
 #include <Arduino.h>
-#include <WebSocketsServer.h>
 #include <ESPAsyncWebServer.h>
-#include <GxIO/GxIO_SPI/GxIO_SPI.h>
-#include <Fonts/FreeMonoBold9pt7b.h>
+#include <FS.h>
 #include <Fonts/FreeMonoBold12pt7b.h>
+#include <Fonts/FreeMonoBold9pt7b.h>
+#include <GxEPD.h>
 #include <GxGDEP015OC1/GxGDEP015OC1.h>
+#include <GxIO/GxIO_SPI/GxIO_SPI.h>
+#include <SPIFFS.h>
+#include <WebSocketsServer.h>
+
 #include "qrcode.h"
 
 bool is_use_ap = false;
 uint8_t refreshesCount = 0;
-const char* ssid = "TP-LINK_4135";
-const char* password = "ww112233..";
+const char *ssid = "TP-LINK_4135";
+const char *password = "ww112233..";
 
 GxIO_Class io(SPI, SS, 17, -1);
 GxEPD_Class display(io, -1, -1);
@@ -78,7 +79,8 @@ void setup() {
     webSocket.onEvent(webSocketEvent);
     webSocket.begin();
     server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
-        AsyncWebServerResponse *response = request->beginResponse(SPIFFS, "/www/index.html");
+        AsyncWebServerResponse *response =
+            request->beginResponse(SPIFFS, "/www/index.html");
         request->send(response);
     });
     server.on("/favicon.ico", HTTP_GET, [](AsyncWebServerRequest *request) {
@@ -88,33 +90,35 @@ void setup() {
     server.begin();
 }
 
-void loop() {
-    webSocket.loop();
-}
+void loop() { webSocket.loop(); }
 
-void webSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t length) {
-    switch(type) {
+void webSocketEvent(uint8_t num, WStype_t type, uint8_t *payload,
+                    size_t length) {
+    switch (type) {
         case WStype_DISCONNECTED:
             Serial.printf("[%u] Disconnected!\n", num);
             break;
-        case WStype_CONNECTED:{
+        case WStype_CONNECTED: {
             IPAddress ip = webSocket.remoteIP(num);
-            Serial.printf("[%u] Connected from %d.%d.%d.%d url: %s\n", num, ip[0], ip[1], ip[2], ip[3], payload);
+            Serial.printf("[%u] Connected from %d.%d.%d.%d url: %s\n", num,
+                          ip[0], ip[1], ip[2], ip[3], payload);
             break;
         }
         case WStype_TEXT:
             Serial.printf("[%u] get Text: %s\n", num, payload);
             break;
-        case WStype_BIN:{
+        case WStype_BIN: {
             Serial.printf("[%u] get binary length: %u\n", num, length);
             if (++refreshesCount < 8) {
                 display.fillScreen(GxEPD_WHITE);
-                display.drawBitmap(payload, 0, 0, GxEPD_WIDTH, GxEPD_HEIGHT, GxEPD_BLACK);
+                display.drawBitmap(payload, 0, 0, GxEPD_WIDTH, GxEPD_HEIGHT,
+                                   GxEPD_BLACK);
                 display.updateWindow(0, 0, GxEPD_WIDTH, GxEPD_HEIGHT, false);
             } else {
                 refreshesCount = 0;
                 display.fillScreen(GxEPD_WHITE);
-                display.drawBitmap(payload, 0, 0, GxEPD_WIDTH, GxEPD_HEIGHT, GxEPD_BLACK);
+                display.drawBitmap(payload, 0, 0, GxEPD_WIDTH, GxEPD_HEIGHT,
+                                   GxEPD_BLACK);
                 display.update();
             }
             break;
