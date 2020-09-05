@@ -1,20 +1,19 @@
 #include <Arduino.h>
 #include <ESPAsyncWebServer.h>
 #include <FS.h>
-#include <Fonts/FreeMonoBold12pt7b.h>
-#include <Fonts/FreeMonoBold9pt7b.h>
 #include <GxEPD.h>
 #include <GxGDEP015OC1/GxGDEP015OC1.h>
 #include <GxIO/GxIO_SPI/GxIO_SPI.h>
 #include <SPIFFS.h>
 #include <WebSocketsServer.h>
-
+#include <Fonts/FreeMonoBold12pt7b.h>
+#include <Fonts/FreeMonoBold9pt7b.h>
 #include "qrcode.h"
 
 bool is_use_ap = false;
 uint8_t refreshesCount = 0;
-const char *ssid = "TP-LINK_4135";
-const char *password = "ww112233..";
+const char *ssid = "hacker";
+const char *password = "12345678";
 
 GxIO_Class io(SPI, SS, 17, -1);
 GxEPD_Class display(io, -1, -1);
@@ -31,6 +30,7 @@ void setup() {
         while (1) yield();
     }
     display.init();
+    display.fillScreen(GxEPD_WHITE);
     display.update();
     display.setCursor(0, 9);
     display.setTextColor(GxEPD_BLACK);
