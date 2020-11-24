@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <ESPAsyncWebServer.h>
 #include <FS.h>
+#include <Adafruit_I2CDevice.h>
 #include <GxEPD.h>
 #include <GxGDEP015OC1/GxGDEP015OC1.h>
 #include <GxIO/GxIO_SPI/GxIO_SPI.h>
@@ -12,8 +13,10 @@
 
 bool is_use_ap = false;
 uint8_t refreshesCount = 0;
-const char *ssid = "hacker";
-const char *password = "12345678";
+// const char *ssid = "hacker";
+// const char *password = "12345678";
+const char *ssid = "行云阁";
+const char *password = "xingyunge";
 
 GxIO_Class io(SPI, SS, 17, -1);
 GxEPD_Class display(io, -1, -1);
@@ -80,7 +83,7 @@ void setup() {
     webSocket.begin();
     server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
         AsyncWebServerResponse *response =
-            request->beginResponse(SPIFFS, "/www/index.html");
+            request->beginResponse(SPIFFS, "/www/new_index.html");
         request->send(response);
     });
     server.on("/favicon.ico", HTTP_GET, [](AsyncWebServerRequest *request) {
