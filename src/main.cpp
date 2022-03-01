@@ -15,8 +15,8 @@ bool is_use_ap = false;
 uint8_t refreshesCount = 0;
 // const char *ssid = "hacker";
 // const char *password = "12345678";
-const char *ssid = "205";
-const char *password = "66666666";
+const char *ssid = "行云阁";
+const char *password = "xingyunge";
 
 GxIO_Class io(SPI, SS, 17, -1);
 GxEPD_Class display(io, -1, -1);
