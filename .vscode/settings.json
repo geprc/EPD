@@ -37,5 +37,7 @@
         "iomanip": "cpp",
         "limits": "cpp"
     },
-    "editor.fontSize": 13
+    "editor.fontSize": 15,
+    "editor.fontFamily": "JetBrains Mono NL, 'Courier New', monospace",
+    "scm.inputFontSize": 14
 }

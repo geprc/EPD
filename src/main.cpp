@@ -15,8 +15,8 @@ bool is_use_ap = false;
 uint8_t refreshesCount = 0;
 // const char *ssid = "hacker";
 // const char *password = "12345678";
-const char *ssid = "205";
-const char *password = "66666666";
+const char *ssid = "GEPRC";
+const char *password = "1234567890";
 
 GxIO_Class io(SPI, SS, 17, -1);
 GxEPD_Class display(io, -1, -1);
@@ -83,7 +83,8 @@ void setup() {
     webSocket.begin();
     server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
         AsyncWebServerResponse *response =
-            request->beginResponse(SPIFFS, "/www/new_index.html");
+            // request->beginResponse(SPIFFS, "/www/new_index.html");
+            request->beginResponse(SPIFFS, "/www/index.html");
         request->send(response);
     });
     server.on("/favicon.ico", HTTP_GET, [](AsyncWebServerRequest *request) {
