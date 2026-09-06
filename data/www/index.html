@@ -3,30 +3,112 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#f4f1e8">
-    <title>EPD 电子墨水屏画板</title>
-    <link rel="stylesheet" href="/css/index.css">
+    <meta name="theme-color" content="#111315">
+    <meta name="description" content="ESP32 电子墨水屏在线画板">
+    <title>墨水屏画板</title>
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-    <main class="panel">
-        <header>
-            <p class="eyebrow">ESP32 · GDEP015OC1</p>
-            <h1>电子墨水屏画板</h1>
-            <p class="description">在画布上书写，然后将 200 × 200 黑白图像发送到墨水屏。</p>
+    <main class="app-shell">
+        <header class="topbar">
+            <div class="brand">
+                <span class="brand-mark" aria-hidden="true">E</span>
+                <div>
+                    <h1>墨水屏画板</h1>
+                    <p>EPD Studio</p>
+                </div>
+            </div>
+            <div id="connection" class="connection">
+                <span class="connection-dot" aria-hidden="true"></span>
+                <span id="connection-text">离线</span>
+            </div>
         </header>
 
-        <canvas id="canvas" width="200" height="200"
-                aria-label="黑白绘图画布"></canvas>
+        <div class="workspace">
+            <section class="preview" aria-labelledby="preview-title">
+                <div class="section-heading">
+                    <div>
+                        <p class="kicker">实时预览</p>
+                        <h2 id="preview-title">200 × 200 px</h2>
+                    </div>
+                    <span class="format">1-BIT</span>
+                </div>
 
-        <div class="toolbar">
-            <button id="clear" type="button" class="secondary">清空</button>
-            <button id="send" type="button">发送到屏幕</button>
+                <div class="display-frame">
+                    <div class="canvas-wrap" aria-label="绘图区">
+                        <canvas id="canvas" width="200" height="200"
+                                aria-label="黑白绘图画布"></canvas>
+                    </div>
+                    <div class="display-meta" aria-hidden="true">
+                        <span>GDEP015OC1</span>
+                        <span>1.54″ E-PAPER</span>
+                    </div>
+                </div>
+
+                <p class="canvas-help">在画布上拖动即可绘制，支持鼠标与触控笔。</p>
+            </section>
+
+            <aside class="controls" aria-label="编辑工具">
+                <section class="control-group">
+                    <div class="group-title">
+                        <span>绘图</span>
+                        <output id="brush-size-value" for="brush-size">3 px</output>
+                    </div>
+                    <div class="segmented" role="group" aria-label="绘图工具">
+                        <button id="pen" class="tool active" type="button"
+                                aria-pressed="true">画笔</button>
+                        <button id="eraser" class="tool" type="button"
+                                aria-pressed="false">橡皮</button>
+                    </div>
+                    <label class="range-row">
+                        <span>笔画粗细</span>
+                        <input id="brush-size" type="range" min="1" max="12"
+                               value="3" aria-label="画笔粗细">
+                    </label>
+                </section>
+
+                <section class="control-group">
+                    <div class="group-title"><span>文字</span></div>
+                    <div class="text-tool">
+                        <input id="text-input" type="text" maxlength="24"
+                               placeholder="输入文字" aria-label="添加文字">
+                        <select id="text-size" aria-label="文字大小">
+                            <option value="16">小</option>
+                            <option value="24" selected>中</option>
+                            <option value="32">大</option>
+                        </select>
+                    </div>
+                    <button id="add-text" type="button" class="wide secondary">添加到画布</button>
+                </section>
+
+                <section class="control-group">
+                    <div class="group-title"><span>画布</span></div>
+                    <div class="edit-grid">
+                        <button id="undo" type="button" class="secondary" disabled>撤销</button>
+                        <label class="file-button" tabindex="0">
+                            导入图片
+                            <input id="image-input" type="file" accept="image/*">
+                        </label>
+                        <button id="invert" type="button" class="secondary">黑白反相</button>
+                        <button id="clear" type="button" class="secondary danger">清空</button>
+                    </div>
+                </section>
+
+                <div class="send-area">
+                    <button id="send" class="send" type="button" disabled>
+                        <span>发送到屏幕</span><span aria-hidden="true">→</span>
+                    </button>
+                    <p id="status" class="status" role="status" aria-live="polite">正在连接设备…</p>
+                </div>
+            </aside>
         </div>
 
-        <p id="status" class="status" role="status" aria-live="polite">
-            正在连接设备…
-        </p>
+        <footer>
+            <span>ESP32 · WebSocket :81</span>
+            <span class="shortcuts">P 画笔 · E 橡皮 · ⌘/Ctrl + Z 撤销</span>
+        </footer>
     </main>
-    <script src="/js/draw.js"></script>
+    <script src="js/bitmap.js"></script>
+    <script src="js/draw.js"></script>
 </body>
 </html>

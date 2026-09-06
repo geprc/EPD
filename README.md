@@ -46,6 +46,17 @@ pio device monitor
 
 串口监视器波特率为 115200。烧录完成后，扫描屏幕上的二维码即可打开画板。
 
+## 测试
+
+运行不依赖硬件的网页与固件协议检查：
+
+```bash
+python3 -m unittest discover -s test -p "test_*.py" -v
+node test/test_bitmap.js
+```
+
+测试内容和实机验证范围见 [`test/README.md`](test/README.md)。
+
 ## 工作原理
 
 ```text
@@ -72,4 +83,3 @@ HTTP 服务运行在 80 端口。每张图先经过 7 次局部刷新，第 8 �
 
 - GDEP015OC1 已停产，同尺寸替代屏不一定兼容 `GxEPD2_154` 驱动。
 - WebSocket 没有加密或鉴权，请仅在可信局域网中使用。
-- `data/www/new_index.html` 和 `src/others.x` 是未启用的旧实验代码。
