@@ -1,22 +1,117 @@
-html,
+:root {
+    color-scheme: light;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: #ded8ca;
+    color: #1e211d;
+}
+
+* {
+    box-sizing: border-box;
+}
+
 body {
-    height: 100%;
-    text-align: center;
+    min-height: 100vh;
+    margin: 0;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+}
+
+.panel {
+    width: min(100%, 520px);
+    padding: 28px;
+    border: 1px solid #aaa394;
+    border-radius: 18px;
+    background: #f4f1e8;
+    box-shadow: 0 16px 45px rgb(39 35 26 / 16%);
+}
+
+header {
+    margin-bottom: 20px;
+}
+
+.eyebrow {
+    margin: 0 0 6px;
+    color: #686355;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+h1 {
+    margin: 0;
+    font-size: clamp(1.7rem, 7vw, 2.35rem);
+}
+
+.description {
+    margin: 8px 0 0;
+    color: #5e5a50;
+    line-height: 1.55;
 }
 
 #canvas {
-    box-sizing: border-box;
-    border: 1px solid #000;
     display: block;
-    margin: 10px auto;
+    width: min(100%, 400px);
+    height: auto;
+    margin: 0 auto;
+    border: 2px solid #1e211d;
+    border-radius: 4px;
+    background: #fff;
+    cursor: crosshair;
+    image-rendering: pixelated;
+    touch-action: none;
 }
 
-#clear {
-    float: left;
-    margin: 0 0 0 10%;
+.toolbar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 18px;
 }
 
-#send {
-    float: right;
-    margin: 0 10% 0 0;
+button {
+    min-height: 44px;
+    border: 1px solid #1e211d;
+    border-radius: 8px;
+    background: #1e211d;
+    color: #fff;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+button.secondary {
+    background: transparent;
+    color: #1e211d;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+}
+
+.status {
+    min-height: 1.5em;
+    margin: 14px 0 0;
+    color: #686355;
+    text-align: center;
+}
+
+.status.connected {
+    color: #28613b;
+}
+
+.status.error {
+    color: #a02f27;
+}
+
+@media (max-width: 420px) {
+    body {
+        padding: 12px;
+    }
+
+    .panel {
+        padding: 18px;
+    }
 }
